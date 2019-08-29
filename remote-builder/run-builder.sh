@@ -32,6 +32,12 @@ gcloud compute instances create \
        --metadata block-project-ssh-keys=TRUE \
        --metadata-from-file ssh-keys=ssh-keys
 
+for i in $(seq 1 10); do 
+  gcloud compute ssh --ssh-key-file=${KEYNAME} \
+       ${USERNAME}@${INSTANCE_NAME} -- true && break
+  echo "Couldn't connect to ${INSTANCE_NAME} yet (try $i/10).  Waiting 10 seconds to try again..."
+done
+
 trap cleanup EXIT
 
 gcloud compute scp --compress --recurse \
