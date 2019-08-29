@@ -35,14 +35,19 @@ gcloud compute instances create \
 for i in $(seq 1 10); do 
   gcloud compute ssh --ssh-key-file=${KEYNAME} \
        ${USERNAME}@${INSTANCE_NAME} -- true && break
-  echo "Couldn't connect to ${INSTANCE_NAME} yet (try $i/10).  Waiting 10 seconds to try again..."
+  echo "Couldn't connect to ${INSTANCE_NAME} yet (try $i/10).  Waiting 3 seconds to try again..."
+  sleep 3
 done
 
 trap cleanup EXIT
 
+date
+
 gcloud compute scp --compress --recurse \
        $(pwd) ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE} \
        --ssh-key-file=${KEYNAME}
+
+date
 
 gcloud compute ssh --ssh-key-file=${KEYNAME} \
        ${USERNAME}@${INSTANCE_NAME} -- ${COMMAND}
