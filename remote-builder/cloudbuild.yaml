@@ -1,6 +1,7 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/remote-builder', '.' ]
+  dir: remote-builder/
 images:
 - 'gcr.io/$PROJECT_ID/remote-builder'
 tags: ['cloud-builders-community']
