@@ -3,8 +3,7 @@
 # Always delete instance after attempting build
 function cleanup {
     # TODO: disabled for debugging
-    # gcloud compute instances delete ${INSTANCE_NAME} --quiet
-    true
+    gcloud compute instances delete ${INSTANCE_NAME} --quiet
 }
 
 # Configurable parameters
